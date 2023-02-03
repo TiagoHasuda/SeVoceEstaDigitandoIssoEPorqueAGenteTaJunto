@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+    prod:
+        container_name: ligia.web
+        build: .
+        ports:
+            - "3000"
+        restart: unless-stopped
+        networks:
+            - traefik
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.ligiaweb.rule=Host(`sevoceestadigitandoissoeporqueagentetajunto.com`)
+
+networks:
+    traefik:
+        external:
+            name: traefik
