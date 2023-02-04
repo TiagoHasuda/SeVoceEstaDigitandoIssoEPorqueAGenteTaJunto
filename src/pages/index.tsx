@@ -34,6 +34,7 @@ export default function Home() {
   const [data, setData] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showCompliment, setShowCompliment] = useState(false);
   const compliment = useRef('');
+  const trigger = useRef('');
   const [complimentCoordinate, setComplimentCoordinate] = useState({ x: 0, y: 0 });
 
   const getRandom = () => {
@@ -125,14 +126,17 @@ export default function Home() {
 
   useEffect(() => {
     const herCompliment = document.getElementById('herCompliment');
-    herCompliment?.addEventListener('mouseenter', onMouseEnter);
-    herCompliment?.addEventListener('mouseleave', onMouseLeave);
-
-    return () => {
-      herCompliment?.removeEventListener('mouseenter', onMouseEnter);
-      herCompliment?.removeEventListener('mouseleave', onMouseLeave);
+    if (!herCompliment) {
+      trigger.current = trigger.current + 'a';
+    } else {
+      herCompliment?.addEventListener('mouseenter', onMouseEnter);
+      herCompliment?.addEventListener('mouseleave', onMouseLeave);
+      return () => {
+        herCompliment?.removeEventListener('mouseenter', onMouseEnter);
+        herCompliment?.removeEventListener('mouseleave', onMouseLeave);
+      }
     }
-  }, [sentence]);
+  }, [trigger.current]);
 
   useEffect(() => {
     updateData();
