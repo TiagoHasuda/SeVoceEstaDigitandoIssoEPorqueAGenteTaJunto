@@ -146,10 +146,24 @@ export default function Home() {
         <div className={styles.title} dangerouslySetInnerHTML={{ __html: sentence }}>
         </div>
         <div style={{ opacity: showCompliment ? '1':  '0', top: complimentCoordinate.y, left: complimentCoordinate.x }} className={styles.herCompliment}>{compliment}</div>
-        <a className={styles.days}>{data.days} {data.days !== 1 ? 'dias' : 'dia' }</a>
-        <a className={styles.time}>{data.hours.toString().padStart(2, "0")} {data.hours !== 1 ? 'horas' : 'hora'}{'\t'}
-          {data.minutes.toString().padStart(2, "0")} {data.minutes !== 1 ? 'minutos' : 'minuto'}{'\t'}
-          {data.seconds.toString().padStart(2, "0")} {data.seconds !== 1 ? 'segundos' : 'segundo'}</a>
+        <div className={styles.daysContainer}>
+          <a className={styles.daysNumber}>{data.days}</a>
+          <a className={styles.days}>{data.days !== 1 ? 'dias' : 'dia' }</a>
+        </div>
+        <div className={styles.timeWrapper}>
+          <div className={styles.timeContainer}>
+            <a className={styles.timeNumber}>{data.hours.toString().padStart(2, "0")}</a>
+            <a className={styles.time}>{data.hours !== 1 ? 'horas' : 'hora'}</a>
+          </div>
+          <div className={styles.timeContainer}>
+            <a className={styles.timeNumber}>{data.minutes.toString().padStart(2, "0")}</a>
+            <a className={styles.time}>{data.minutes !== 1 ? 'minutos' : 'minuto'}</a>
+          </div>
+          <div className={styles.timeContainer}>
+            <a className={styles.timeNumber}>{data.seconds.toString().padStart(2, "0")}</a>
+            <a className={styles.time}>{data.seconds !== 1 ? 'segundos' : 'segundo'}</a>
+          </div>
+        </div>
         <a className={styles.since}>Desde 01/02/2023 17:00:00</a>
       </main>
     </>
