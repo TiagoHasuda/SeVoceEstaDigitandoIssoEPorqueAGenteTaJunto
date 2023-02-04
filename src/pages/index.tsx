@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const tags = [
   '-',
@@ -30,15 +30,23 @@ const compliments = [
 ];
 
 export default function Home() {
-  const [sentence, setSentence] = useState<string>('');
+  const sentence = useRef('');
   const [data, setData] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showCompliment, setShowCompliment] = useState(false);
-  const [compliment, setCompliment] = useState('');
+  const compliment = useRef('');
   const [complimentCoordinate, setComplimentCoordinate] = useState({ x: 0, y: 0 });
 
   const getRandom = () => {
-    const random = Math.floor(Math.random() * sentences.length);
-    setSentence(renderSentence(sentences[random]));
+    if (!!sentence.current) return
+    const lastSentence = localStorage.getItem('sentence');
+    let random = Math.floor(Math.random() * sentences.length);
+    if (!!lastSentence) {
+      while (sentences[random] === lastSentence) {
+        random = Math.floor(Math.random() * sentences.length);
+      }
+    }
+    localStorage.setItem('sentence', sentences[random]);
+    sentence.current = renderSentence(sentences[random]);
   }
 
   const updateData = () => {
@@ -100,8 +108,11 @@ export default function Home() {
   }
 
   const onMouseEnter = () => {
-    const random = Math.floor(Math.random() * compliments.length);
-    setCompliment(compliments[random]);
+    let random = Math.floor(Math.random() * compliments.length);
+    while (compliments[random] === compliment.current) {
+      random = Math.floor(Math.random() * compliments.length);
+    }
+    compliment.current = compliments[random];
     const randomX = Math.floor(Math.random() * (window.innerWidth - 200));
     const randomY = Math.floor(Math.random() * (window.innerHeight - 200));
     setComplimentCoordinate({ x: randomX, y: randomY });
@@ -143,9 +154,9 @@ export default function Home() {
         <link rel="icon" href="/heart.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.title} dangerouslySetInnerHTML={{ __html: sentence }}>
+        <div className={styles.title} dangerouslySetInnerHTML={{ __html: sentence.current }}>
         </div>
-        <div style={{ opacity: showCompliment ? '1':  '0', top: complimentCoordinate.y, left: complimentCoordinate.x }} className={styles.herCompliment}>{compliment}</div>
+        <div style={{ opacity: showCompliment ? '1':  '0', top: complimentCoordinate.y, left: complimentCoordinate.x }} className={styles.herCompliment}>{compliment.current}</div>
         <div className={styles.daysContainer}>
           <a className={styles.daysNumber}>{data.days}</a>
           <a className={styles.days}>{data.days !== 1 ? 'dias' : 'dia' }</a>
