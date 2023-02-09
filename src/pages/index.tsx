@@ -149,9 +149,14 @@ export default function Home() {
   }, [trigger.current]);
 
   const catPicturesStarter = async () => {
-    startCatPics([catPic, catPic2], catPic, setCatPicCoordinate, setCatPicOpacity);
+    let size = 200;
+    if (window.outerWidth <= 500) {
+      size = 100;
+    }
+
+    startCatPics([catPic, catPic2], catPic, setCatPicCoordinate, setCatPicOpacity, size);
     await sleep(6000);
-    startCatPics([catPic, catPic2], catPic2, setCatPicCoordinate2, setCatPicOpacity2);
+    startCatPics([catPic, catPic2], catPic2, setCatPicCoordinate2, setCatPicOpacity2, size);
   }
 
   const startCatPics = async (
@@ -159,6 +164,7 @@ export default function Home() {
     actualCatPic: MutableRefObject<StaticImageData | undefined>,
     setCoordinate: (value: SetStateAction<{x: number; y: number;}>) => void,
     setOpacity: (value: SetStateAction<number>) => void,
+    size: number,
   ) => {
     while (1) {
       let random = getRandomNum(0, catPictures.length);
@@ -166,10 +172,10 @@ export default function Home() {
         random = getRandomNum(0, catPictures.length);
       }
       actualCatPic.current = catPictures[random];
-      const randomX = getRandomNum(400, window.innerWidth - 400);
-      const randomY = getRandomNum(400, window.innerHeight - 400);
-      const randomX2 = getRandomNum(randomX - 200, randomX + 200);
-      const randomY2 = getRandomNum(randomY - 200, randomY + 200);
+      const randomX = getRandomNum(size * 2, window.innerWidth - size * 2);
+      const randomY = getRandomNum(size * 2, window.innerHeight - size * 2);
+      const randomX2 = getRandomNum(randomX - size, randomX + size);
+      const randomY2 = getRandomNum(randomY - size, randomY + size);
       setCoordinate({ x: randomX, y: randomY });
       await sleep(6000);
       setOpacity(1);

@@ -135,4 +135,9 @@
   .since {
     margin-top: 80px; 
   }
+
+  .catPic {
+    width: 100px;
+    height: 100px;
+  }
 }
