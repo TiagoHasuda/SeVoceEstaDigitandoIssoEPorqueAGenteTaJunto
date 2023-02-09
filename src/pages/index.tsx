@@ -1,6 +1,10 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import { useEffect, useRef, useState } from 'react'
+import { MutableRefObject, SetStateAction, useEffect, useRef, useState } from 'react'
+import { getRandomNum } from '@/utils/random.util';
+import { catPictures } from '@/utils/catPictures.util';
+import { StaticImageData } from 'next/image';
+import { sleep } from '@/utils/sleep.util';
 
 const tags = [
   '-',
@@ -30,20 +34,26 @@ const compliments = [
 ];
 
 export default function Home() {
-  const sentence = useRef('');
   const [data, setData] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [showCompliment, setShowCompliment] = useState(false);
+  const [complimentCoordinate, setComplimentCoordinate] = useState({ x: 0, y: 0 });
+  const [catPicCoordinate, setCatPicCoordinate] = useState({ x: 0, y: 0 });
+  const [catPicOpacity, setCatPicOpacity] = useState(0);
+  const [catPicCoordinate2, setCatPicCoordinate2] = useState({ x: 0, y: 0 });
+  const [catPicOpacity2, setCatPicOpacity2] = useState(0);
+  const sentence = useRef('');
   const compliment = useRef('');
   const trigger = useRef('');
-  const [complimentCoordinate, setComplimentCoordinate] = useState({ x: 0, y: 0 });
+  const catPic = useRef<StaticImageData>();
+  const catPic2 = useRef<StaticImageData>();
 
   const getRandom = () => {
     if (!!sentence.current) return
     const lastSentence = localStorage.getItem('sentence');
-    let random = Math.floor(Math.random() * sentences.length);
+    let random = getRandomNum(0, sentences.length);
     if (!!lastSentence) {
       while (sentences[random] === lastSentence) {
-        random = Math.floor(Math.random() * sentences.length);
+        random = getRandomNum(0, sentences.length);
       }
     }
     localStorage.setItem('sentence', sentences[random]);
@@ -109,13 +119,13 @@ export default function Home() {
   }
 
   const onMouseEnter = () => {
-    let random = Math.floor(Math.random() * compliments.length);
+    let random = getRandomNum(0, compliments.length);
     while (compliments[random] === compliment.current) {
-      random = Math.floor(Math.random() * compliments.length);
+      random = getRandomNum(0, compliments.length);
     }
     compliment.current = compliments[random];
-    const randomX = Math.floor(Math.random() * (window.innerWidth - 200));
-    const randomY = Math.floor(Math.random() * (window.innerHeight - 200));
+    const randomX = getRandomNum(0, window.innerWidth - 200);
+    const randomY = getRandomNum(0, window.innerHeight - 200);
     setComplimentCoordinate({ x: randomX, y: randomY });
     setShowCompliment(true);
   }
@@ -138,9 +148,42 @@ export default function Home() {
     }
   }, [trigger.current]);
 
+  const catPicturesStarter = async () => {
+    startCatPics([catPic, catPic2], catPic, setCatPicCoordinate, setCatPicOpacity);
+    await sleep(6000);
+    startCatPics([catPic, catPic2], catPic2, setCatPicCoordinate2, setCatPicOpacity2);
+  }
+
+  const startCatPics = async (
+    catPicArray: MutableRefObject<StaticImageData | undefined>[],
+    actualCatPic: MutableRefObject<StaticImageData | undefined>,
+    setCoordinate: (value: SetStateAction<{x: number; y: number;}>) => void,
+    setOpacity: (value: SetStateAction<number>) => void,
+  ) => {
+    while (1) {
+      let random = getRandomNum(0, catPictures.length);
+      while (catPicArray.some(catPicItem => catPicItem.current === catPictures[random])) {
+        random = getRandomNum(0, catPictures.length);
+      }
+      actualCatPic.current = catPictures[random];
+      const randomX = getRandomNum(400, window.innerWidth - 400);
+      const randomY = getRandomNum(400, window.innerHeight - 400);
+      const randomX2 = getRandomNum(randomX - 200, randomX + 200);
+      const randomY2 = getRandomNum(randomY - 200, randomY + 200);
+      setCoordinate({ x: randomX, y: randomY });
+      await sleep(6000);
+      setOpacity(1);
+      setCoordinate({ x: randomX2, y: randomY2 });
+      await sleep(3000);
+      setOpacity(0);
+      await sleep(3000);
+    }
+  }
+
   useEffect(() => {
     updateData();
     getRandom();
+    catPicturesStarter();
 
     const unreg = setInterval(updateData, 1000);
 
@@ -180,6 +223,12 @@ export default function Home() {
           </div>
         </div>
         <a className={styles.since}>Desde 01/02/2023 17:00:00</a>
+        <div className={styles.catPic} style={{ top: catPicCoordinate.y, left: catPicCoordinate.x, opacity: catPicOpacity }}>
+          <img className={styles.catPicImg} src={catPic.current?.src} />
+        </div>
+        <div className={styles.catPic} style={{ top: catPicCoordinate2.y, left: catPicCoordinate2.x, opacity: catPicOpacity2 }}>
+          <img className={styles.catPicImg} src={catPic2.current?.src} />
+        </div>
       </main>
     </>
   )
