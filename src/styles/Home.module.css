@@ -7,6 +7,10 @@
   overflow: hidden;
 }
 
+.titleContainer {
+  position: relative;
+}
+
 .title {
   font-size: 50px;
   font-weight: bold;
@@ -78,7 +82,6 @@
 .herComplimentContainer {
   display: inline-block;
   width: fit-content;
-  position: relative;
 }
 
 .herCompliment {
@@ -106,6 +109,31 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+@keyframes beat{
+	to { transform: scale(1.2); }
+}
+
+.brainMeme {
+  display: inline-block;
+}
+
+.brainMemeImg {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  border-radius: 5px;
+  width: 500px;
+  transition: opacity 100ms linear;
+}
+
+.heart {
+  display: inline-block;
+}
+
+.heart:hover {
+  animation: beat 0.5s infinite alternate;
 }
 
 @media (max-width: 500px) {
@@ -139,5 +167,11 @@
   .catPic {
     width: 100px;
     height: 100px;
+  }
+
+  .brainMemeImg {
+    top: 120px;
+    right: 20px;
+    width: 300px;
   }
 }

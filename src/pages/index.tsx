@@ -5,20 +5,23 @@ import { getRandomNum } from '@/utils/random.util';
 import { catPictures } from '@/utils/catPictures.util';
 import { StaticImageData } from 'next/image';
 import { sleep } from '@/utils/sleep.util';
+import meme from '../images/memes/ligia_meme.jpg';
 
 const tags = [
   '-',
   '*',
+  '❤️',
+  '&',
 ] as const;
 
 const sentences = [
   'Dias desde que eu me decidi que era só *-você-*',
   'Dias que eu passei sonhando com *-você-*',
-  'Dias que meu -coração- esperou pelo -seu-',
+  'Dias que meu ❤️-coração-❤️ esperou pelo seu',
   'Dias imaginando como seria estar com *-você-*',
   'Dias que passei sabendo que não aceitaria ninguém além de *-você-*',
   'Dias trabalhando para ser uma pessoa melhor para *-você-*',
-  'Dias que eu levantei da cama e me imaginei acordando -ao seu lado-',
+  'Dias que eu levantei da cama e me imaginei acordando &-ao seu lado-&',
 ];
 
 const compliments = [
@@ -41,6 +44,7 @@ export default function Home() {
   const [catPicOpacity, setCatPicOpacity] = useState(0);
   const [catPicCoordinate2, setCatPicCoordinate2] = useState({ x: 0, y: 0 });
   const [catPicOpacity2, setCatPicOpacity2] = useState(0);
+  const [showMeme, setShowMeme] = useState(false);
   const sentence = useRef('');
   const compliment = useRef('');
   const trigger = useRef('');
@@ -93,6 +97,10 @@ export default function Home() {
         return `<a class='${styles.special}'>${content}</a>`;
       case '*':
         return `<div id='herCompliment' class='${styles.herComplimentContainer}'>${content}</div>`;
+      case '❤️':
+        return `<div class='${styles.heart}'>${content}</div>`;
+      case '&':
+        return `<div id='meme' class='${styles.brainMeme}'>${content}</div>`
       default:
         return content;
     }
@@ -134,16 +142,29 @@ export default function Home() {
     setShowCompliment(false);
   }
 
+  const memeMouseEnter = () => {
+    setShowMeme(true);
+  }
+
+  const memeMouseLeave = () => {
+    setShowMeme(false);
+  }
+
   useEffect(() => {
     const herCompliment = document.getElementById('herCompliment');
-    if (!herCompliment) {
+    const herMeme = document.getElementById('meme');
+    if (!herCompliment && !herMeme) {
       trigger.current = trigger.current + 'a';
     } else {
       herCompliment?.addEventListener('mouseenter', onMouseEnter);
       herCompliment?.addEventListener('mouseleave', onMouseLeave);
+      herMeme?.addEventListener('mouseenter', memeMouseEnter);
+      herMeme?.addEventListener('mouseleave', memeMouseLeave);
       return () => {
         herCompliment?.removeEventListener('mouseenter', onMouseEnter);
         herCompliment?.removeEventListener('mouseleave', onMouseLeave);
+        herMeme?.removeEventListener('mouseenter', memeMouseEnter);
+        herMeme?.removeEventListener('mouseleave', memeMouseLeave);
       }
     }
   }, [trigger.current]);
@@ -207,7 +228,9 @@ export default function Home() {
         <link rel="icon" href="/heart.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.title} dangerouslySetInnerHTML={{ __html: sentence.current }}>
+        <div className={styles.titleContainer}>
+          <div className={styles.title} dangerouslySetInnerHTML={{ __html: sentence.current }} />
+          <img src={meme.src} className={styles.brainMemeImg} style={{ opacity: showMeme ? '1' : '0' }} />
         </div>
         <div style={{ opacity: showCompliment ? '1':  '0', top: complimentCoordinate.y, left: complimentCoordinate.x }} className={styles.herCompliment}>{compliment.current}</div>
         <div className={styles.daysContainer}>
