@@ -34,6 +34,11 @@ const compliments = [
   'Princesa',
   'Charmosa',
   'Sonho',
+  'Fofa',
+  'Engenheira',
+  'Gata',
+  'A melhor',
+  'Vamo se beija',
 ];
 
 export default function Home() {

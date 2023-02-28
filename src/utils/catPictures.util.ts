@@ -8,6 +8,9 @@ import cat_7 from '../images/cats/cat_7.jpg'
 import cat_8 from '../images/cats/cat_8.jpg'
 import cat_9 from '../images/cats/cat_9.jpg'
 import cat_10 from '../images/cats/cat_10.jpg'
+import cat_11 from '../images/cats/cat_11.webp'
+import cat_12 from '../images/cats/cat_12.webp'
+import cat_13 from '../images/cats/cat_13.png'
 
 export const catPictures = [
   cat_1,
@@ -20,4 +23,7 @@ export const catPictures = [
   cat_8,
   cat_9,
   cat_10,
+  cat_11,
+  cat_12,
+  cat_13,
 ]
