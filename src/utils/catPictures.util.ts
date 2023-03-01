@@ -11,6 +11,16 @@ import cat_10 from '../images/cats/cat_10.jpg'
 import cat_11 from '../images/cats/cat_11.webp'
 import cat_12 from '../images/cats/cat_12.webp'
 import cat_13 from '../images/cats/cat_13.png'
+import cat_14 from '../images/cats/cat_14.png'
+import cat_15 from '../images/cats/cat_15.png'
+import cat_16 from '../images/cats/cat_16.png'
+import cat_17 from '../images/cats/cat_17.png'
+import cat_18 from '../images/cats/cat_18.png'
+import cat_19 from '../images/cats/cat_19.png'
+import cat_20 from '../images/cats/cat_20.png'
+import cat_21 from '../images/cats/cat_21.png'
+import cat_22 from '../images/cats/cat_22.png'
+import cat_23 from '../images/cats/cat_23.png'
 
 export const catPictures = [
   cat_1,
@@ -26,4 +36,14 @@ export const catPictures = [
   cat_11,
   cat_12,
   cat_13,
+  cat_14,
+  cat_15,
+  cat_16,
+  cat_17,
+  cat_18,
+  cat_19,
+  cat_20,
+  cat_21,
+  cat_22,
+  cat_23,
 ]
