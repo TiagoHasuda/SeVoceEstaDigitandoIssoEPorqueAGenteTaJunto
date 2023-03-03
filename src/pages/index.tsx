@@ -50,6 +50,9 @@ export default function Home() {
   const [catPicCoordinate2, setCatPicCoordinate2] = useState({ x: 0, y: 0 });
   const [catPicOpacity2, setCatPicOpacity2] = useState(0);
   const [showMeme, setShowMeme] = useState(false);
+  const [secondsBg, setSecondsBg] = useState(0);
+  const [minutesBg, setMinutesBg] = useState(0);
+  const [hoursBg, setHoursBg] = useState(0);
   const sentence = useRef('');
   const compliment = useRef('');
   const trigger = useRef('');
@@ -69,7 +72,7 @@ export default function Home() {
     sentence.current = renderSentence(sentences[random]);
   }
 
-  const updateData = () => {
+  const updateData = async () => {
     const then = new Date();
     then.setFullYear(2023);
     then.setMonth(1);
@@ -94,6 +97,11 @@ export default function Home() {
       minutes,
       seconds,
     })
+    setSecondsBg(0);
+    setMinutesBg((seconds / 60) * 100);
+    setHoursBg((minutes / 60) * 100);
+    await sleep(100);
+    setSecondsBg(100);
   }
 
   const getSentenceItem = (tag: typeof tags[number], content: string) => {
@@ -235,7 +243,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.titleContainer}>
           <div className={styles.title} dangerouslySetInnerHTML={{ __html: sentence.current }} />
-          <img src={meme.src} className={styles.brainMemeImg} style={{ opacity: showMeme ? '1' : '0' }} />
+          {sentence.current.includes('ao seu lado') && <img src={meme.src} className={styles.brainMemeImg} style={{ opacity: showMeme ? '1' : '0' }} />}
         </div>
         <div style={{ opacity: showCompliment ? '1':  '0', top: complimentCoordinate.y, left: complimentCoordinate.x }} className={styles.herCompliment}>{compliment.current}</div>
         <div className={styles.daysContainer}>
@@ -244,15 +252,24 @@ export default function Home() {
         </div>
         <div className={styles.timeWrapper}>
           <div className={styles.timeContainer}>
-            <a className={styles.timeNumber}>{data.hours.toString().padStart(2, "0")}</a>
+            <div className={styles.timeNumber}>
+              <div className={styles.timeBackground} style={{ width: `${hoursBg}%`, transition: 'width 500ms ease-out' }} />
+              <div style={{ position: 'relative' }}>{data.hours.toString().padStart(2, "0")}</div>
+            </div>
             <a className={styles.time}>{data.hours !== 1 ? 'horas' : 'hora'}</a>
           </div>
           <div className={styles.timeContainer}>
-            <a className={styles.timeNumber}>{data.minutes.toString().padStart(2, "0")}</a>
+            <div className={styles.timeNumber}>
+              <div className={styles.timeBackground} style={{ width: `${minutesBg}%`, transition: 'width 500ms ease-out' }} />
+              <div style={{ position: 'relative' }}>{data.minutes.toString().padStart(2, "0")}</div>
+            </div>
             <a className={styles.time}>{data.minutes !== 1 ? 'minutos' : 'minuto'}</a>
           </div>
           <div className={styles.timeContainer}>
-            <a className={styles.timeNumber}>{data.seconds.toString().padStart(2, "0")}</a>
+            <div className={styles.timeNumber}>
+              <div className={styles.timeBackground} style={{ width: `${secondsBg}%`, transition: secondsBg === 100 ? 'width 900ms ease-out' : undefined }} />
+              <div style={{ position: 'relative' }}>{data.seconds.toString().padStart(2, "0")}</div>
+            </div>
             <a className={styles.time}>{data.seconds !== 1 ? 'segundos' : 'segundo'}</a>
           </div>
         </div>
