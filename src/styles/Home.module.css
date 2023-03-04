@@ -78,6 +78,18 @@
   box-shadow: 0 0 10px 0 #ccc;
 }
 
+.eyeIconContainer {
+  margin-left: auto;
+  width: fit-content;
+  margin-top: -10px;
+  margin-right: -35px;
+  cursor: pointer;
+}
+
+.eyeIcon {
+  width: 30px;
+}
+
 .since {
   font-weight: bold;
   margin-top: 150px;
@@ -148,6 +160,41 @@
   animation: beat 0.5s infinite alternate;
 }
 
+.iLoveYou {
+  display: inline-block;
+  transition: color 200ms linear;
+}
+
+.iLoveYouContainer {
+  position: absolute;
+  box-shadow: 0 0 10px 0 #ccc;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: bottom 2000ms ease-in-out, transform 5000ms ease-in-out;
+  max-width: 80%;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.rainContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rainParticle {
+  position: absolute;
+  font-size: 30px;
+  transition: top 4000ms linear;
+  visibility: hidden;
+}
+
 @media (max-width: 1280px) {
   .title {
     font-size: 35px;
@@ -210,6 +257,18 @@
   .time {
     font-size: 20px;
     width: 120px;
+  }
+
+  .eyeIconContainer {
+    margin-left: auto;
+    width: fit-content;
+    margin-top: -10px;
+    margin-right: -25px;
+    cursor: pointer;
+  }
+  
+  .eyeIcon {
+    width: 20px;
   }
 
   .since {
