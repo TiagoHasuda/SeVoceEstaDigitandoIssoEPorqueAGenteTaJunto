@@ -409,7 +409,7 @@ export default function Home() {
       ongoingRain.current = true
       renderRain()
       const audio = document.getElementById("treasure") as HTMLAudioElement
-      audio.play()
+      await audio.play()
       startILoveYouInfiniteSentence()
       const sleepPromise = sleep(7000)
       await sleep(500)
