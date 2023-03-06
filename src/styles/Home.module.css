@@ -58,6 +58,7 @@
   width: 70px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .timeBackground {
@@ -76,18 +77,6 @@
   border-radius: 5px;
   width: 180px;
   box-shadow: 0 0 10px 0 #ccc;
-}
-
-.eyeIconContainer {
-  margin-left: auto;
-  width: fit-content;
-  margin-top: -10px;
-  margin-right: -35px;
-  cursor: pointer;
-}
-
-.eyeIcon {
-  width: 30px;
 }
 
 .since {
@@ -169,12 +158,13 @@
 
 .iLoveYouContainer {
   position: absolute;
+  z-index: 1;
   box-shadow: 0 0 10px 0 #ccc;
   background-color: white;
   border-radius: 5px;
   padding: 10px 20px;
   font-weight: bold;
-  transition: bottom 2000ms ease-in-out, transform 5000ms ease-in-out;
+  transition: bottom 2000ms ease-in-out, transform 100ms ease-in-out;
   max-width: 80%;
   word-wrap: break-word;
   text-align: center;
@@ -188,10 +178,12 @@
   right: 0;
   overflow: hidden;
   pointer-events: none;
+  transition: background-color 400ms linear;
 }
 
 .rainParticle {
   position: absolute;
+  z-index: 1;
   font-size: 30px;
   transition: top 4000ms linear;
   visibility: hidden;
@@ -259,18 +251,6 @@
   .time {
     font-size: 20px;
     width: 120px;
-  }
-
-  .eyeIconContainer {
-    margin-left: auto;
-    width: fit-content;
-    margin-top: -10px;
-    margin-right: -25px;
-    cursor: pointer;
-  }
-  
-  .eyeIcon {
-    width: 20px;
   }
 
   .since {

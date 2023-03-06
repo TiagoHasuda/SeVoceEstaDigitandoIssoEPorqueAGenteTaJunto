@@ -13,7 +13,6 @@ import {catPictures} from "@/utils/catPictures.util"
 import {StaticImageData} from "next/image"
 import {sleep} from "@/utils/sleep.util"
 import meme from "../images/memes/ligia_meme.jpg"
-import eyeIcon from "../images/icons/eye.png"
 
 const tags = [
   "-",
@@ -205,6 +204,7 @@ const treasureLyrics: {
 
 const rainText: string = "❤️"
 const rainParticleCount: number = 50
+const beatDuration: number = 505
 
 const sentences: string[] = [
   "Dias desde que eu me decidi que era só *-você-*",
@@ -248,9 +248,12 @@ export default function Home() {
   const [showTimeAnimation, setShowTimeAnimation] = useState(true)
   const [_iLoveYouSentence, setILoveYouSentence] = useState("")
   const [iLoveYouSentenceFontSize, setILoveYouSentenceFontSize] = useState(30)
-  const [iLoveYouSentenceBottom, setILoveYouSentenceBottom] = useState("20px")
+  const [iLoveYouSentenceBottom, setILoveYouSentenceBottom] = useState("90%")
   const [rainParticles, setRainParticles] = useState<ReactNode[]>([])
+  const [backdropColor, setBackdropColor] = useState("transparent")
+  const [beatSize, setBeatSize] = useState(1)
   const ongoingRain = useRef(false)
+  const ongoingBeat = useRef(false)
   const sentence = useRef("")
   const compliment = useRef("")
   const trigger = useRef("")
@@ -398,9 +401,11 @@ export default function Home() {
     if (letter) {
       letter.style.cursor = "text"
       letter.style.color = "red"
+      letter.style.textDecoration = "none"
     }
     if (index === 6) {
       setILoveYouSentenceBottom("40px")
+      setBackdropColor("#00000050")
       ongoingRain.current = true
       renderRain()
       const audio = document.getElementById("treasure") as HTMLAudioElement
@@ -409,7 +414,8 @@ export default function Home() {
       const sleepPromise = sleep(7000)
       await sleep(500)
       let currFontSize = 30
-      while (currFontSize < 70) {
+      const maxFontSize = window.innerWidth > 500 ? 70 : 40
+      while (currFontSize < maxFontSize) {
         currFontSize += 0.5
         setILoveYouSentenceFontSize(currFontSize)
         await sleep(20)
@@ -417,6 +423,8 @@ export default function Home() {
       await Promise.all([sleepPromise])
       stopWriting.current = true
       setILoveYouSentenceBottom("50%")
+      ongoingBeat.current = true
+      startBeat()
       let lyrics = ""
       let curr, i, o
       for (i = 0; i < treasureLyrics.length; i++) {
@@ -443,14 +451,19 @@ export default function Home() {
       for (i = 0; i <= index; i++) {
         curr = document.getElementById(`iloveyou${i + 1}`) as HTMLElement
         if (i !== 0) curr.style.cursor = "text"
-        else curr.style.cursor = "pointer"
+        else {
+          curr.style.cursor = "pointer"
+          curr.style.textDecoration = "underline"
+        }
         curr.style.color = "black"
       }
       stopWriting.current = false
       ongoingRain.current = false
+      ongoingBeat.current = false
       setILoveYouSentence("")
-      setILoveYouSentenceBottom("20px")
+      setILoveYouSentenceBottom("90%")
       setILoveYouSentenceFontSize(30)
+      setBackdropColor("transparent")
     }
   }
 
@@ -467,6 +480,16 @@ export default function Home() {
       }
       res(true)
     })
+  }
+
+  const startBeat = async () => {
+    while (ongoingBeat.current) {
+      const sleepPromise = sleep(beatDuration)
+      setBeatSize(1.1)
+      await sleep(100)
+      setBeatSize(1)
+      await Promise.all([sleepPromise])
+    }
   }
 
   const renderRain = async () => {
@@ -486,12 +509,9 @@ export default function Home() {
     let randomLeft, randomDelay
     while (ongoingRain.current) {
       for (i = 0; i < rainParticlesRefs.length; i++) {
-        if (!ongoingRain.current) return;
-        const curr = rainParticlesRefs[i];
-        if (
-          curr.offsetTop < window.innerHeight &&
-          curr.offsetTop > 0
-        ) {
+        if (!ongoingRain.current) return
+        const curr = rainParticlesRefs[i]
+        if (curr.offsetTop < window.innerHeight && curr.offsetTop > 0) {
           await sleep(100)
           continue
         }
@@ -529,7 +549,10 @@ export default function Home() {
         loveLetter?.addEventListener("click", () =>
           updateILoveYouSentence(index)
         )
-        if (index === 0 && loveLetter) loveLetter.style.cursor = "pointer"
+        if (index === 0 && loveLetter) {
+          loveLetter.style.cursor = "pointer"
+          loveLetter.style.textDecoration = "underline"
+        }
       })
 
       return () => {
@@ -687,7 +710,10 @@ export default function Home() {
         </div>
         <div className={styles.timeWrapper}>
           <div className={styles.timeContainer}>
-            <div className={styles.timeNumber}>
+            <div
+              className={styles.timeNumber}
+              onClick={toggleShowTimeAnimation}
+            >
               <div
                 className={styles.timeBackground}
                 style={{
@@ -702,7 +728,10 @@ export default function Home() {
             <a className={styles.time}>{data.hours !== 1 ? "horas" : "hora"}</a>
           </div>
           <div className={styles.timeContainer}>
-            <div className={styles.timeNumber}>
+            <div
+              className={styles.timeNumber}
+              onClick={toggleShowTimeAnimation}
+            >
               <div
                 className={styles.timeBackground}
                 style={{
@@ -719,7 +748,10 @@ export default function Home() {
             </a>
           </div>
           <div className={styles.timeContainer}>
-            <div className={styles.timeNumber}>
+            <div
+              className={styles.timeNumber}
+              onClick={toggleShowTimeAnimation}
+            >
               <div
                 className={styles.timeBackground}
                 style={{
@@ -735,18 +767,6 @@ export default function Home() {
             <a className={styles.time}>
               {data.seconds !== 1 ? "segundos" : "segundo"}
             </a>
-          </div>
-          <div
-            className={styles.eyeIconContainer}
-            onClick={toggleShowTimeAnimation}
-          >
-            <img
-              src={eyeIcon.src}
-              className={styles.eyeIcon}
-              style={{
-                filter: showTimeAnimation ? "contrast(100%)" : "contrast(0%)",
-              }}
-            />
           </div>
         </div>
         <a className={styles.since}>Desde 01/02/2023 17:00:00</a>
@@ -776,12 +796,18 @@ export default function Home() {
             style={{
               bottom: iLoveYouSentenceBottom,
               fontSize: iLoveYouSentenceFontSize,
+              transform: `scale(${beatSize})`,
             }}
           >
             {_iLoveYouSentence}
           </div>
         )}
-        <div className={styles.rainContainer}>{rainParticles}</div>
+        <div
+          className={styles.rainContainer}
+          style={{backgroundColor: backdropColor}}
+        >
+          {rainParticles}
+        </div>
       </main>
     </>
   )
