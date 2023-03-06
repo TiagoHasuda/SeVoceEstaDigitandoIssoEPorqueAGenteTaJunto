@@ -39,7 +39,7 @@ const treasureLyrics: {
 }[] = [
   {
     delay: 0,
-    lyrics: "treasure",
+    lyrics: "💎treasure💎",
   },
   {
     delay: 2000,
@@ -57,7 +57,7 @@ const treasureLyrics: {
   },
   {
     delay: 500,
-    lyrics: " you",
+    lyrics: " ❤️you❤️",
     stack: true,
   },
   {
@@ -86,7 +86,7 @@ const treasureLyrics: {
   },
   {
     delay: 800,
-    lyrics: " star",
+    lyrics: " 🌟star🌟",
     stack: true,
   },
   {
@@ -154,12 +154,12 @@ const treasureLyrics: {
   },
   {
     delay: 300,
-    lyrics: " treasure",
+    lyrics: " 💎treasure💎",
     stack: true,
   },
   {
     delay: 900,
-    lyrics: " you",
+    lyrics: " ❤️you❤️",
     stack: true,
   },
   {
@@ -183,12 +183,12 @@ const treasureLyrics: {
   },
   {
     delay: 400,
-    lyrics: " treasure",
+    lyrics: " 💎treasure💎",
     stack: true,
   },
   {
     delay: 1100,
-    lyrics: " you",
+    lyrics: " ❤️you❤️",
     stack: true,
   },
   {

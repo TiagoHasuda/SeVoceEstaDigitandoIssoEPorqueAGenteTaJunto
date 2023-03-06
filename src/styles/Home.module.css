@@ -115,6 +115,7 @@
   font-size: 20px;
   z-index: 1;
   box-shadow: 0 0 10px 0 #ccc;
+  pointer-events: none;
 }
 
 .catPic {
@@ -126,6 +127,7 @@
   background-color: white;
   box-shadow: 0 0 10px 0 #ccc;
   transition: top 6000ms linear, left 6000ms linear, opacity 2000ms linear;
+  pointer-events: none;
 }
 
 .catPicImg {
