@@ -409,7 +409,7 @@ export default function Home() {
       const sleepPromise = sleep(7000)
       await sleep(500)
       let currFontSize = 30
-      while (currFontSize < 100) {
+      while (currFontSize < 70) {
         currFontSize += 0.5
         setILoveYouSentenceFontSize(currFontSize)
         await sleep(20)
