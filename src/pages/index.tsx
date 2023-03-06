@@ -411,7 +411,7 @@ export default function Home() {
       const audio = document.getElementById("treasure") as HTMLAudioElement
       await audio.play()
       startILoveYouInfiniteSentence()
-      const sleepPromise = sleep(7000)
+      const sleepPromise = sleep(6900)
       await sleep(500)
       let currFontSize = 30
       const maxFontSize = window.innerWidth > 500 ? 70 : 40
