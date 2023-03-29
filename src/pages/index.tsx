@@ -281,8 +281,8 @@ export default function Home() {
   const updateData = async () => {
     const then = new Date()
     then.setFullYear(2023)
-    then.setMonth(1)
     then.setDate(1)
+    then.setMonth(1)
     then.setHours(17, 0, 0)
     const now = new Date()
     let diff = now.getTime() - then.getTime()
@@ -291,6 +291,7 @@ export default function Home() {
     const getHours = getMinutes * 60
     const getDays = getHours * 24
     const days = Math.floor(diff / getDays)
+    console.log({ days })
     diff = diff % getDays
     const hours = Math.floor(diff / getHours)
     diff = diff % getHours
