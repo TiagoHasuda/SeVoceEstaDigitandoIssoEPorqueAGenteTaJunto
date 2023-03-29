@@ -291,7 +291,6 @@ export default function Home() {
     const getHours = getMinutes * 60
     const getDays = getHours * 24
     const days = Math.floor(diff / getDays)
-    console.log({ days })
     diff = diff % getDays
     const hours = Math.floor(diff / getHours)
     diff = diff % getHours
