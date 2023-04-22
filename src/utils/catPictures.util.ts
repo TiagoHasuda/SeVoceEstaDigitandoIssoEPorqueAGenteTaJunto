@@ -21,6 +21,25 @@ import cat_20 from '../images/cats/cat_20.png'
 import cat_21 from '../images/cats/cat_21.png'
 import cat_22 from '../images/cats/cat_22.png'
 import cat_23 from '../images/cats/cat_23.png'
+import cat_24 from '../images/cats/cat_24.png'
+import cat_25 from '../images/cats/cat_25.png'
+import cat_26 from '../images/cats/cat_26.png'
+import cat_27 from '../images/cats/cat_27.png'
+import cat_28 from '../images/cats/cat_28.png'
+import cat_29 from '../images/cats/cat_29.png'
+import cat_30 from '../images/cats/cat_30.png'
+import cat_31 from '../images/cats/cat_31.png'
+import cat_32 from '../images/cats/cat_32.png'
+import cat_33 from '../images/cats/cat_33.png'
+import cat_34 from '../images/cats/cat_34.png'
+import cat_35 from '../images/cats/cat_35.png'
+import cat_36 from '../images/cats/cat_36.png'
+import cat_37 from '../images/cats/cat_37.png'
+import cat_38 from '../images/cats/cat_38.png'
+import cat_39 from '../images/cats/cat_39.png'
+import cat_40 from '../images/cats/cat_40.png'
+import cat_41 from '../images/cats/cat_41.png'
+import cat_42 from '../images/cats/cat_42.png'
 
 export const catPictures = [
   cat_1,
@@ -46,4 +65,23 @@ export const catPictures = [
   cat_21,
   cat_22,
   cat_23,
+  cat_24,
+  cat_25,
+  cat_26,
+  cat_27,
+  cat_28,
+  cat_29,
+  cat_30,
+  cat_31,
+  cat_32,
+  cat_33,
+  cat_34,
+  cat_35,
+  cat_36,
+  cat_37,
+  cat_38,
+  cat_39,
+  cat_40,
+  cat_41,
+  cat_42,
 ]
